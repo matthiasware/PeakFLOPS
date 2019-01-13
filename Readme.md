@@ -6,13 +6,13 @@ The peak performance of a CPU is often measured in __FLOPS(Flopating Point Opera
 
 #### Requirements
 - g++
-- intel
+- clang++
 
 ## Run
 ```sh
 git clone https://github.com/matthiasware/PeakFLOPS.git
-cd PeakFLOPS
-make
+mkdir build && cd build
+cmake .. && make
 ./peak_flops
 ```
 
