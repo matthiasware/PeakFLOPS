@@ -206,7 +206,7 @@ int main(int argc, char* argv[])
     }
     while (clock < run_duration);
 
-    std::cout << "============= COFIG =================" << std::endl;
+    std::cout << "============= CONFIG =================" << std::endl;
     std::cout << "Runtime measure (sec): " << run_duration.count() << std::endl;
     std::cout << "Blocksize:             " << m_block_size << std::endl;
     std::cout << "Ind Instructions:      " << bench.independent_instructions << std::endl;
