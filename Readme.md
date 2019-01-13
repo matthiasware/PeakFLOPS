@@ -1,8 +1,3 @@
-# TODO
-- add AVX introduction
-- explain SIMD
-- explain ILP
-
 # FLOPS & How to maximize them theoretically and practically
 
 The peak performance of a CPU is often measured in __FLOPS(Flopating Point Operations per Second)__. Calculating the theoretical peak performance of a given CPU is often straightforward, but practically maximizing the performed FLOPS is much harder. Here we try to reach the theoretical peak performance practically for the AVX2 instruction set for the following intel architectures:
