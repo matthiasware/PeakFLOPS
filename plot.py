@@ -29,7 +29,7 @@ if __name__ == "__main__":
     ax.axhline(112, color="green", label="Theoretical Peak GFLOPS",
                linewidth=linewidth)
     ax.tick_params(axis="both", which="both", labelsize=xyticks_fontsize)
-    ax.set_xlabel("# independent instructioins")
+    ax.set_xlabel("# independent instructions")
     ax.set_ylabel("GFLOPS")
     ax.xaxis.label.set_size(axis_label_fontsize)
     ax.yaxis.label.set_size(axis_label_fontsize)

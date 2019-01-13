@@ -5,8 +5,8 @@
 
 # FLOPS & How to maximize them theoretically and practically
 
+The peak performance of a CPU is often measured in __FLOPS(Flopating Point Operations per Second)__. Calculating the theoretical peak performance of a given CPU is often straightforward, but practically maximizing the performed FLOPS is much harder. Here we try to reach the theoretical peak performance practically for the AVX2 instruction set for the following intel architectures:
 
-Contains code to reach the theoretical Peak FLOPS for the AVX2 instruction set on the following architectures:
 Haswell - Broadwell - Skylake - Kaby Lake - Coffee Lake - Whiskey Lake - Amber Lake.
 
 #### Requirements
@@ -15,36 +15,38 @@ Haswell - Broadwell - Skylake - Kaby Lake - Coffee Lake - Whiskey Lake - Amber L
 
 ## Run
 ```sh
+git clone https://github.com/matthiasware/PeakFLOPS.git
+cd PeakFLOPS
 make
 ./peak_flops
 ```
 
-## Maximizing Theoretical FLOPS
+### Theoretical Peak FLOPS
 
-The theoretical peak FLOPS for a given operation per processor core can be calculated via:
+The theoretical peak FLOPS per processor core can be calculated, by maximizing the RHS of the following equation:
 
 ```math
-flops \ second \ core =   flops \ operation 
-                        x operations \ instruction 
-                        x instructions \ cycle 
-                        x  cycles \ second 
+FLOPS / core =   flops / operation 
+               x operations / instruction 
+               x instructions / cycle 
+               x  cycles / second 
 ```
 
 You can read in [1] what the indiviual factors mean. In order to maximizing the FLOPS, we need to maximize the individual factors of the equation above:
 
-The operation that maximizes the ```flops \ operation``` factor, is the fused multiply add operation, which performs an addition and an multiplication in one operation: ```a <- a + (b * c)```. This factor is 2.
+The operation that maximizes the ```flops \ operation``` factor, is the fused multiply add operation (see [3]), which performs an addition and an multiplication in one operation: ```a <- a + (b * c)```. This factor is 2/1.
 
-In order to maximize the ```operations \ instruction``` we need to utilize our vector registers. Each 256 Bit  vector registers can hold 8 32 Bit single precision floating point numbers. The ```_mm256_fmadd_ps``` intrinsic instruction operates on these refisters and executes 8 fused multiply add operations at once. This factor is 8.
+In order to maximize the ```operations \ instruction``` we need to utilize our vector registers. Each 256 Bit  vector registers can hold 8 32 Bit single precision floating point numbers. The ```_mm256_fmadd_ps``` intrinsic instruction operates on these registers and executes 8 fused multiply add operations at once. This factor is 8.
 
-Maximizing the ```instructions \ cycle``` factor means to maximize the instruction throuput of the CPU. On the micro-architectures given above we have two execution units, where each unit executes the ```_mm256_fmadd_ps``` instruction simultaniously if independent. This factor is 2.
+Maximizing the ```instructions \ cycle``` factor means to maximize the instruction throuput of the CPU (see [3]). On the micro-architectures given above (see [4]) we have two execution units, where each unit executes the ```_mm256_fmadd_ps``` instruction simultaniously if independent. This factor is 2.
 
 For the last factor ```cylces \ second``` we can use the turbo-boost specification of the specific processor.
 
-E.g. for the Intel Core i7-7500U this yield theoretical Peak FLOPS of ```2 x 8 x 2 x 3.5GHz = 112.0 GFLOPS ``` per core by using the ```_mm256_fmadd_ps``` instruction.
+E.g. for the Intel Core i7-7500U this yield theoretical Peak FLOPS of ```2 x 8 x 2 x 3.5GHz = 112.0 GFLOPS ``` per core by using the ```_mm256_fmadd_ps``` instruction and presumably use all our execution units.
 
-Refer to [3] and [4] for further information
 
-#### Practically maximizing FLOPS
+### Practically maximizing FLOPS
+
 Starting simple, consider the following code snippet. It performs a single ```_mm256_fmadd_ps``` operation for a number of iterations:
 
 ```c++
@@ -123,7 +125,7 @@ float run_kernel(size_t iterations)
 
 With 8 independent iterations we measure 110.6 GFLOPS which means 0.987 % of our precaclulated theoretical peak FLOPS.
 
-In the following graph you can see, how it scales:
+In the following graph you can see, how it scales and peaks:
 
 ![Alt text](peak_flops.png?raw=true)
 

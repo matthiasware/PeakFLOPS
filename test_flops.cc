@@ -5,9 +5,9 @@
 
 struct benchmark
 {
-    virtual int get_flops_per_iteration() = 0;
-    virtual int get_independent_instructions() = 0;
-    virtual float run_kernel(size_t iterations) = 0;
+    virtual int get_flops_per_iteration() const = 0;
+    virtual int get_independent_instructions() const = 0;
+    virtual float run_kernel(size_t iterations) const = 0;
 
     const __m256 mul0 = _mm256_set1_ps(1.001f);
     const __m256 mul1 = _mm256_set1_ps(1.002f);
@@ -27,16 +27,16 @@ static inline float __m256_reduce_add_ps(__m256 x) {
 struct benchmark_12 : benchmark
 {
 
-    int get_independent_instructions()
+    int get_independent_instructions() const override
     {
         return 12;
     }
-    int get_flops_per_iteration()
+    int get_flops_per_iteration() const override
     {
         // OPERATIONS x INSTRUCTIONS x SIZE
         return 12 * 2 * 8;
     }
-    float run_kernel(size_t iterations)
+    float run_kernel(size_t iterations) const override
     {
             __m256 r0 = _mm256_set1_ps((float) __builtin_ia32_rdtsc());
             __m256 r1 = _mm256_set1_ps((float) __builtin_ia32_rdtsc());
@@ -85,16 +85,16 @@ struct benchmark_12 : benchmark
 struct benchmark_11 : benchmark
 {
 
-    int get_independent_instructions()
+    int get_independent_instructions() const override
     {
         return 11;
     }
-    int get_flops_per_iteration()
+    int get_flops_per_iteration() const override
     {
         // OPERATIONS x INSTRUCTIONS x SIZE
         return 11 * 2 * 8;
     }
-    float run_kernel(size_t iterations)
+    float run_kernel(size_t iterations) const override
     {
             __m256 r0 = _mm256_set1_ps((float) __builtin_ia32_rdtsc());
             __m256 r1 = _mm256_set1_ps((float) __builtin_ia32_rdtsc());
@@ -142,16 +142,16 @@ struct benchmark_11 : benchmark
 struct benchmark_10 : benchmark
 {
 
-    int get_independent_instructions()
+    int get_independent_instructions() const override
     {
         return 10;
     }
-    int get_flops_per_iteration()
+    int get_flops_per_iteration() const override
     {
         // OPERATIONS x INSTRUCTIONS x SIZE
         return 10 * 2 * 8;
     }
-    float run_kernel(size_t iterations)
+    float run_kernel(size_t iterations) const override
     {
             __m256 r0 = _mm256_set1_ps((float) __builtin_ia32_rdtsc());
             __m256 r1 = _mm256_set1_ps((float) __builtin_ia32_rdtsc());
@@ -194,16 +194,16 @@ struct benchmark_10 : benchmark
 };
 struct benchmark_9 : benchmark
 {
-    int get_independent_instructions()
+    int get_independent_instructions() const override
     {
         return 9;
     }
-    int get_flops_per_iteration()
+    int get_flops_per_iteration() const override
     {
         // OPERATIONS x INSTRUCTIONS x SIZE
         return 9 * 2 * 8;
     }
-    float run_kernel(size_t iterations)
+    float run_kernel(size_t iterations) const override
     {
             __m256 r0 = _mm256_set1_ps((float) __builtin_ia32_rdtsc());
             __m256 r1 = _mm256_set1_ps((float) __builtin_ia32_rdtsc());
@@ -243,16 +243,16 @@ struct benchmark_9 : benchmark
 struct benchmark_8 : benchmark
 {
 
-    int get_independent_instructions()
+    int get_independent_instructions() const override
     {
         return 8;
     }
-    int get_flops_per_iteration()
+    int get_flops_per_iteration() const override
     {
         // OPERATIONS x INSTRUCTIONS x SIZE
         return 8 * 2 * 8;
     }
-    float run_kernel(size_t iterations)
+    float run_kernel(size_t iterations) const override
     {
             __m256 r0 = _mm256_set1_ps((float) __builtin_ia32_rdtsc());
             __m256 r1 = _mm256_set1_ps((float) __builtin_ia32_rdtsc());
@@ -289,16 +289,16 @@ struct benchmark_8 : benchmark
 
 struct benchmark_7 : benchmark
 {
-    int get_independent_instructions()
+    int get_independent_instructions() const override
     {
         return 7;
     }
-    int get_flops_per_iteration()
+    int get_flops_per_iteration() const override
     {
         // OPERATIONS x INSTRUCTIONS x SIZE
         return 7 * 2 * 8;
     }
-    float run_kernel(size_t iterations)
+    float run_kernel(size_t iterations) const override
     {
             __m256 r0 = _mm256_set1_ps((float) __builtin_ia32_rdtsc());
             __m256 r1 = _mm256_set1_ps((float) __builtin_ia32_rdtsc());
@@ -333,16 +333,16 @@ struct benchmark_7 : benchmark
 struct benchmark_6 : benchmark
 {
 
-    int get_independent_instructions()
+    int get_independent_instructions() const override
     {
         return 6;
     }
-    int get_flops_per_iteration()
+    int get_flops_per_iteration() const override
     {
         // OPERATIONS x INSTRUCTIONS x SIZE
         return 6 * 2 * 8;
     }
-    float run_kernel(size_t iterations)
+    float run_kernel(size_t iterations) const override
     {
             __m256 r0 = _mm256_set1_ps((float) __builtin_ia32_rdtsc());
             __m256 r1 = _mm256_set1_ps((float) __builtin_ia32_rdtsc());
@@ -373,16 +373,16 @@ struct benchmark_6 : benchmark
 struct benchmark_5 : benchmark
 {
 
-    int get_independent_instructions()
+    int get_independent_instructions() const override
     {
         return 5;
     }
-    int get_flops_per_iteration()
+    int get_flops_per_iteration() const override
     {
         // OPERATIONS x INSTRUCTIONS x SIZE
         return 5 * 2 * 8;
     }
-    float run_kernel(size_t iterations)
+    float run_kernel(size_t iterations) const override
     {
             __m256 r0 = _mm256_set1_ps((float) __builtin_ia32_rdtsc());
             __m256 r1 = _mm256_set1_ps((float) __builtin_ia32_rdtsc());
@@ -409,16 +409,16 @@ struct benchmark_5 : benchmark
 struct benchmark_4 : benchmark
 {
 
-    int get_independent_instructions()
+    int get_independent_instructions() const override
     {
         return 4;
     }
-    int get_flops_per_iteration()
+    int get_flops_per_iteration() const override
     {
         // OPERATIONS x INSTRUCTIONS x SIZE
         return 4 * 2 * 8;
     }
-    float run_kernel(size_t iterations)
+    float run_kernel(size_t iterations) const override
     {
             __m256 r0 = _mm256_set1_ps((float) __builtin_ia32_rdtsc());
             __m256 r1 = _mm256_set1_ps((float) __builtin_ia32_rdtsc());
@@ -442,16 +442,16 @@ struct benchmark_4 : benchmark
 struct benchmark_3 : benchmark
 {
 
-    int get_independent_instructions()
+    int get_independent_instructions() const override
     {
         return 3;
     }
-    int get_flops_per_iteration()
+    int get_flops_per_iteration() const override
     {
         // OPERATIONS x INSTRUCTIONS x SIZE
         return 3 * 2 * 8;
     }
-    float run_kernel(size_t iterations)
+    float run_kernel(size_t iterations) const override
     {
             __m256 r0 = _mm256_set1_ps((float) __builtin_ia32_rdtsc());
             __m256 r1 = _mm256_set1_ps((float) __builtin_ia32_rdtsc());
@@ -470,16 +470,16 @@ struct benchmark_3 : benchmark
 };
 struct benchmark_2 : benchmark
 {
-    int get_independent_instructions()
+    int get_independent_instructions() const override
     {
         return 2;
     }
-    int get_flops_per_iteration()
+    int get_flops_per_iteration() const override
     {
         // OPERATIONS x INSTRUCTIONS x SIZE
         return 2 * 2 * 8;
     }
-    float run_kernel(size_t iterations)
+    float run_kernel(size_t iterations) const override
     {
             __m256 r0 = _mm256_set1_ps((float) __builtin_ia32_rdtsc());
             __m256 r1 = _mm256_set1_ps((float) __builtin_ia32_rdtsc());
@@ -495,16 +495,16 @@ struct benchmark_2 : benchmark
 };
 struct benchmark_1 : benchmark
 {
-    int get_independent_instructions()
+    int get_independent_instructions() const override
     {
         return 1;
     }
-    int get_flops_per_iteration()
+    int get_flops_per_iteration() const override
     {
         // OPERATIONS x INSTRUCTIONS x SIZE
         return 1 * 2 * 8;
     }
-        float run_kernel(size_t iterations)
+        float run_kernel(size_t iterations) const override
     {
             __m256 r0 = _mm256_set1_ps((float) __builtin_ia32_rdtsc());
             do{
@@ -515,7 +515,7 @@ struct benchmark_1 : benchmark
     }
 };
 
-void bench_kernel(benchmark &bench)
+void bench_kernel(const benchmark &bench)
 {
     double seconds = 1;
     int m_block_size = 10000000;
@@ -548,30 +548,18 @@ void bench_kernel(benchmark &bench)
 
 void runAll()
 {
-    benchmark_1 b1;
-    benchmark_2 b2;
-    benchmark_3 b3;
-    benchmark_4 b4;
-    benchmark_5 b5;
-    benchmark_6 b6;
-    benchmark_7 b7;
-    benchmark_8 b8;
-    benchmark_9 b9;
-    benchmark_10 b10;
-    benchmark_11 b11;
-    benchmark_12 b12;
-    bench_kernel(b1);
-    bench_kernel(b2);
-    bench_kernel(b3);
-    bench_kernel(b4);
-    bench_kernel(b5);
-    bench_kernel(b6);
-    bench_kernel(b7);
-    bench_kernel(b8);
-    bench_kernel(b9);
-    bench_kernel(b10);
-    bench_kernel(b11);
-    bench_kernel(b12);
+    bench_kernel(benchmark_1 {});
+    bench_kernel(benchmark_2 {});
+    bench_kernel(benchmark_3 {});
+    bench_kernel(benchmark_4 {});
+    bench_kernel(benchmark_5 {});
+    bench_kernel(benchmark_6 {});
+    bench_kernel(benchmark_7 {});
+    bench_kernel(benchmark_8 {});
+    bench_kernel(benchmark_9 {});
+    bench_kernel(benchmark_10 {});
+    bench_kernel(benchmark_11 {});
+    bench_kernel(benchmark_12 {});
 }
 int main(int argc, char* argv[])
 {
@@ -582,18 +570,18 @@ int main(int argc, char* argv[])
             int ix = std::atoi(argv[i]);
             switch(ix)
             {
-                case 1: {benchmark_1 b1;    bench_kernel(b1); break;}
-                case 2: {benchmark_2 b2;    bench_kernel(b2); break;}
-                case 3: {benchmark_3 b3;    bench_kernel(b3); break;}
-                case 4: {benchmark_4 b4;    bench_kernel(b4); break;}
-                case 5: {benchmark_5 b5;    bench_kernel(b5); break;}
-                case 6: {benchmark_6 b6;    bench_kernel(b6); break;}
-                case 7: {benchmark_7 b7;    bench_kernel(b7); break;}
-                case 8: {benchmark_8 b8;    bench_kernel(b8); break;}
-                case 9: {benchmark_9 b9;    bench_kernel(b9); break;}
-                case 10: {benchmark_10 b10; bench_kernel(b10); break;}
-                case 11: {benchmark_11 b11; bench_kernel(b11); break;}
-                case 12: {benchmark_12 b12; bench_kernel(b12); break;}
+                case 1: {bench_kernel(benchmark_1{}); break;}
+                case 2: {bench_kernel(benchmark_2{}); break;}
+                case 3: {bench_kernel(benchmark_3{}); break;}
+                case 4: {bench_kernel(benchmark_4{}); break;}
+                case 5: {bench_kernel(benchmark_5{}); break;}
+                case 6: {bench_kernel(benchmark_6{}); break;}
+                case 7: {bench_kernel(benchmark_7{}); break;}
+                case 8: {bench_kernel(benchmark_8{}); break;}
+                case 9: {bench_kernel(benchmark_9{}); break;}
+                case 10: {bench_kernel(benchmark_10{}); break;}
+                case 11: {bench_kernel(benchmark_11{}); break;}
+                case 12: {bench_kernel(benchmark_12{}); break;}
              
             }
         }
