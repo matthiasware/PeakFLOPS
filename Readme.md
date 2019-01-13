@@ -3,7 +3,8 @@
 - explain SIMD
 - explain ILP
 
-# Theoretical Peak FLOPS & How to reach them practically
+# FLOPS & How to maximize them theoretically and practically
+
 
 Contains code to reach the theoretical Peak FLOPS for the AVX2 instruction set on the following architectures:
 Haswell - Broadwell - Skylake - Kaby Lake - Coffee Lake - Whiskey Lake - Amber Lake.
@@ -18,8 +19,9 @@ make
 ./peak_flops
 ```
 
-## Calculating the Theoretical Peak FLOPS
-The Theoretical Peak FLOPS per core for a given operation can be calculated via:
+## Maximizing Theoretical FLOPS
+
+The theoretical peak FLOPS for a given operation per processor core can be calculated via:
 
 ```math
 flops \ second \ core =   flops \ operation 
@@ -28,17 +30,21 @@ flops \ second \ core =   flops \ operation
                         x  cycles \ second 
 ```
 
-You can read in [1] what the indiviual factors mean. In order to maximizing the Peak FLOPS, we need to maximize the individual factors.
+You can read in [1] what the indiviual factors mean. In order to maximizing the FLOPS, we need to maximize the individual factors of the equation above:
 
-The operation that maximizes the ```flops \ operation``` factor, is the fused multiply add operation. It performs an addition and an multiplication in one operation.
-To maximize the ```operations \ instruction``` we need to utilize the vector registers.
-Each 256 Bit registers can hold 8 32Bit single precision floating point numbers. Maximizing this factor can be achieved by using  the ```_mm256_fmadd_ps``` intrinsic instruction, which executes 8 fused multiply add operations at once.
-Maximizing the ```instructions \ cycle``` factor means to maximize the instruction throuput of the CPU. On the micro-architectures given above we have two execution units, where each unit executes the ```_mm256_fmadd_ps``` instruction simultaniously if independent. For the last factor ```cylces \ second``` we can use the turbo-boost specification of the specific processor.
+The operation that maximizes the ```flops \ operation``` factor, is the fused multiply add operation, which performs an addition and an multiplication in one operation: ```a <- a + (b * c)```. This factor is 2.
 
-For the Intel Core i7-7500U this yield Theoretical Peak FLOPS of ```2 x 8 x 2 x 3.5GHz = 112.0 GFLOPS ``` per core.
-Refer to [3] and [4] for further information.
+In order to maximize the ```operations \ instruction``` we need to utilize our vector registers. Each 256 Bit  vector registers can hold 8 32 Bit single precision floating point numbers. The ```_mm256_fmadd_ps``` intrinsic instruction operates on these refisters and executes 8 fused multiply add operations at once. This factor is 8.
 
-#### Practically Getting There
+Maximizing the ```instructions \ cycle``` factor means to maximize the instruction throuput of the CPU. On the micro-architectures given above we have two execution units, where each unit executes the ```_mm256_fmadd_ps``` instruction simultaniously if independent. This factor is 2.
+
+For the last factor ```cylces \ second``` we can use the turbo-boost specification of the specific processor.
+
+E.g. for the Intel Core i7-7500U this yield theoretical Peak FLOPS of ```2 x 8 x 2 x 3.5GHz = 112.0 GFLOPS ``` per core by using the ```_mm256_fmadd_ps``` instruction.
+
+Refer to [3] and [4] for further information
+
+#### Practically maximizing FLOPS
 Starting simple, consider the following code snippet. It performs a single ```_mm256_fmadd_ps``` operation for a number of iterations:
 
 ```c++
@@ -52,7 +58,7 @@ float run_kernel(size_t iterations)
  }
 
 ```
-By executing it, we measure 13.6 GFLOPS. The problem here is, that here we have a series of dependent ```_mm256_fmadd_ps``` operations and we utilize only one of our two execution units. 
+By executing it, we measure 13.6 GFLOPS. The problem here is, that we have a series of dependent ```_mm256_fmadd_ps``` operations and therefore we utilize only one of our two execution units.
 
 In order to use our second execution unit we can add an independent ```_mm256_fmadd_ps``` instruction:
 
@@ -70,10 +76,13 @@ float run_kernel(size_t iterations)
 ```
 By execution, we measure 27.2GFLOPS, which means we doubled the number of FLOPS by just using our second execution unit.
 
-So far we only maximized the instruction throuput. In order to get to the Theroretical  Peak FLOPS, we need consider one more thing: Instruction latency.
+So far we only maximized the instruction throuput. In order to get maximize our experimental FLOPS, we need consider one more thing: Instruction latency.
+
+According to [3], the latency of an instruction is the delay, that the instruction generates in a dependency chain. The measurement unit is clock cycles.
 
 
-As mentioned before, the througput for the ```_mm256_fmadd_ps``` instruction is 2 on independent calculations and the instruction latency is 4 (see [3]). In our case we started two operations simultaniously but had to wait for 4 cycles until the operations completed.
+As mentioned before, the througput for the ```_mm256_fmadd_ps``` instruction is 2 on independent calculations and the instruction latency according to [3] is 4. 
+In our case we started two operations simultaniously but had to wait for 4 cycles until the operations completed.
 In order to maximize our experimental PEAK Flops, we want to start 2 independent instructions per cycle for each execution unit. This means we need 4 x 2 = 8 independent operations:
 
 ```c++
@@ -112,9 +121,11 @@ float run_kernel(size_t iterations)
 }
 ```
 
-![Alt text](peak_flops.png?raw=true)
+With 8 independent iterations we measure 110.6 GFLOPS which means 0.987 % of our precaclulated theoretical peak FLOPS.
 
-With 8 independent iterations we measure 109.6 GFLOPS.
+In the following graph you can see, how it scales:
+
+![Alt text](peak_flops.png?raw=true)
 
 
 ### Additional Information
