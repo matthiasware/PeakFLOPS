@@ -112,7 +112,7 @@ float run_kernel(size_t iterations)
 }
 ```
 
-![Alt text](peak_flops.jpg?raw=true)
+![Alt text](peak_flops.png?raw=true)
 
 With 8 independent iterations we measure 109.6 GFLOPS.
 
