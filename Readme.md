@@ -73,13 +73,13 @@ float run_kernel(size_t iterations)
         ...
 }
 ```
-For this wee measure 27.2GFLOPS. We doubled the number of FLOPS by using both of our execution units.
+For this we measure 27.2GFLOPS. We doubled the number of FLOPS by using both of our execution units.
 
 So far we maximized the instruction throughput. In order to maximize our experimental FLOPS, we need consider one more factor: Instruction latency.
 
-According to [3], the latency of an instruction is the delay, that the instruction generates in a dependency chain. The measurement unit is clock cycles.
+According to [3], the latency of an instruction is the delay that the instruction generates in a dependency chain. The measurement unit is clock cycles.
 
-The latencies for the ```_mm256_fmadd_ps``` instruction vary, depending on your microarchitecture. According to [3], the Kaby Lake generation has a throughput of 2 and a latency of 4 for the  ```_mm256_fmadd_ps``` instruction.
+The latency for the ```_mm256_fmadd_ps``` instruction vary, depending on your microarchitecture. According to [3], the Kaby Lake generation has a throughput of 2 and a latency of 4 for the  ```_mm256_fmadd_ps``` instruction.
 
 
 Analyzing our previous result, we started two operations simultaniously but had to wait for 4 cycles until the operations completed.
