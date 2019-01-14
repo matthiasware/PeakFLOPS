@@ -4,11 +4,11 @@ The peak performance of a CPU is often measured in __FLOPS( Floating Point Opera
 
 	Haswell - Broadwell - Skylake - Kaby Lake - Coffee Lake - Whiskey Lake - Amber Lake.
 
-#### Requirements
+##### Requirements
 - g++
 - clang++
 
-## Run
+##### Run
 ```sh
 git clone https://github.com/matthiasware/PeakFLOPS.git
 mkdir build && cd build
