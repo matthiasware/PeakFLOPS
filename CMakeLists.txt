@@ -13,7 +13,7 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
 endif()
 
-set(FLAGS -Ofast -Wall)
+set(FLAGS -O3 -Wall)
 if((CMAKE_CXX_COMPILER_ID MATCHES "GNU") OR (CMAKE_CXX_COMPILER_ID MATCHES "Clang"))
 	set(FLAGS ${FLAGS} -march=native)
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "Intel")
