@@ -219,7 +219,3 @@ int main(int argc, char* argv[])
     std::cout << "Flops:            " << flops << std::endl;
     std::cout << "GFlops:           " << flops / 1000000000 << std::endl;
 }
-
-/*
-
-*/

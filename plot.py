@@ -11,10 +11,6 @@ bbox_to_anchor = (1, 0.2)
 axis_label_fontsize = 24
 
 
-iterations = [43, 43, 43, 43,
-              44, 43, 42, 41,
-              36, 32, 29, 26]
-
 gflops = [13.76, 26.88, 41.28, 55.04,
           65.6, 78.72, 91.84, 107.52,
           106.56, 105.6, 109.12, 106.52]
@@ -38,6 +34,8 @@ if __name__ == "__main__":
                fontsize=legend_fontsize,
                bbox_to_anchor=bbox_to_anchor
                )
+    ax.set_title("KabyLake - Experimental Peak FLOPS",
+                 fontsize=legend_fontsize)
     fig.tight_layout()
     fig.savefig("peak_flops.png")
     # plt.show()

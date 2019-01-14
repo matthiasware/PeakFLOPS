@@ -515,7 +515,7 @@ struct benchmark_1 : benchmark
     }
 };
 
-void bench_kernel(const benchmark &bench)
+float bench_kernel(const benchmark &bench)
 {
     double seconds = 1;
     int m_block_size = 10000000;
@@ -535,14 +535,16 @@ void bench_kernel(const benchmark &bench)
     while (clock < duration);
 
     double flops = iterations * m_flops_per_iteration * m_block_size / seconds;
+    double gflops = flops / 1000000000;
     std::cout << "\n";
     std::cout << "Ind Instructions: " << bench.get_independent_instructions() << std::endl;
     std::cout << "Iterations:       " << iterations << std::endl;
     std::cout << "Blocksize:        " << m_block_size << std::endl;
     std::cout << "m_flops_per_iter: " << m_flops_per_iteration << std::endl;
-    std::cout << "GFlops:           " << flops / 1000000000 << std::endl;
+    std::cout << "GFlops:           " << gflops << std::endl;
     std::cout << "Flops:            " << flops << std::endl;
     std::cout << "SUM:              " << sum << std::endl;
+    return gflops;
 
 }
 
