@@ -88,14 +88,7 @@ In order to maximize our experimental PEAK Flops, we have to start one independe
 ```c++
 float run_kernel(size_t iterations)
 {
-        __m256 r0 = _mm256_set1_ps((float) __builtin_ia32_rdtsc());
-        __m256 r1 = _mm256_set1_ps((float) __builtin_ia32_rdtsc());
-        __m256 r2 = _mm256_set1_ps((float) __builtin_ia32_rdtsc());
-        __m256 r3 = _mm256_set1_ps((float) __builtin_ia32_rdtsc());
-        __m256 r4 = _mm256_set1_ps((float) __builtin_ia32_rdtsc());
-        __m256 r5 = _mm256_set1_ps((float) __builtin_ia32_rdtsc());
-        __m256 r6 = _mm256_set1_ps((float) __builtin_ia32_rdtsc());
-        __m256 r7 = _mm256_set1_ps((float) __builtin_ia32_rdtsc());
+	...
         do{
             r0 = _mm256_fmadd_ps(mul0, mul1, r0); // operation 1
             r1 = _mm256_fmadd_ps(mul0, mul1, r1); // operation 2
@@ -107,17 +100,7 @@ float run_kernel(size_t iterations)
             r7 = _mm256_fmadd_ps(mul0, mul1, r7); // operation 8
 
         }while (--iterations);
-
-        r0 = _mm256_add_ps(r0, r4);
-        r1 = _mm256_add_ps(r1, r5);
-        r2 = _mm256_add_ps(r2, r6);
-        r3 = _mm256_add_ps(r3, r7);
-
-        r0 = _mm256_add_ps(r0, r1);
-        r2 = _mm256_add_ps(r2, r3);
-
-        r0 = _mm256_add_ps(r0, r2);
-        return sum8(r0);
+	...
 }
 ```
 
