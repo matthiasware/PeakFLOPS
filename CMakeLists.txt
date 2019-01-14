@@ -1,10 +1,6 @@
 cmake_minimum_required(VERSION 3.11)
 project(PeakFLOPS CXX)
 
-# set(CMAKE_CXX_COMPILER /usr/bin/g++)
-# set(CMAKE_CXX_COMPILER /usr/bin/g++)
-# set(CMAKE_CXX_COMPILER /usr/bin/clang++)
-
 add_executable(peak_flops peak_flops.cc)
 add_executable(test_flops test_flops.cc)
 
