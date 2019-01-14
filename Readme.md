@@ -1,6 +1,6 @@
 # Maximizing FLOPS theoretically and practically
 
-The peak performance of a CPU is often measured in __FLOPS(Flopating Point Operations per Second)__. Calculating the theoretical peak performance of a given CPU is often straightforward, but practically maximizing the performed FLOPS is much harder. Here we try to reach the theoretical peak performance practically for the AVX2 instruction set for the following intel architectures:
+The peak performance of a CPU is often measured in __FLOPS( Floating Point Operations per Second)__. Calculating the theoretical peak performance of a given CPU is often straightforward, but practically maximizing the performed FLOPS is much harder. Here we try to reach the theoretical peak performance practically for the AVX2 instruction set. This works on the following Intel architectures:
 
 	Haswell - Broadwell - Skylake - Kaby Lake - Coffee Lake - Whiskey Lake - Amber Lake.
 
@@ -26,7 +26,7 @@ The theoretical peak FLOPS per CPU core can be calculated by maximizing the RHS 
 FLOPS / core =   flops / operation 
                x operations / instruction 
                x instructions / cycle 
-               x  cycles / second 
+               x cycles / second 
 ```
 
 You can read in [1] what the indiviual factors mean. In order to maximizing the FLOPS, we need to maximize the individual factors of the equation above:
