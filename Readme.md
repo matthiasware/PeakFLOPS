@@ -129,12 +129,10 @@ In the following graph you can see, how it scales and peaks:
 
 
 ### Additional Information
-- Intel does not work
-- Compiler optimization
-- Add threads
-- Benchmarking with Intel VTune Amplifier
-- Check assembly output
-- Problem with store
+- The Intel compiler compiler does not work.
+- Thread support is comming.
+- Benchmarking the code with Intel VTune Amplifier yields similar results.
+- Check the assembly output if the results seem unreasonable.
 
 ## Resources:
 ##### [1] Theoretical Peak FLOPS per instruction set on modern Intel CPUs - http://www.dolbeau.name/dolbeau/publications/peak.pdf
